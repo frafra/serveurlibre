@@ -1,0 +1,107 @@
+button[disabled] {
+    text-decoration:line-through;
+}
+#offercontainer {
+    position: absolute;
+    margin: 0px;
+    height: 100%;
+    width: 350px;
+}
+#offer {
+    margin: 0px;
+    height: 80px;
+    width: 100%;
+}
+#offer > button {
+    height: 30px;
+}
+#items {
+    overflow-y: scroll;
+    overflow-x: auto;
+    position: absolute;
+    top: 80px;
+    bottom: 205px;
+    width: 100%;
+}
+#numbers {
+    position: absolute;
+    margin: 0px;
+    height: 165px;
+    width: 100%;
+    bottom: 33px;
+}
+#numbersleft {
+    margin: 0px;
+    height: 165px;
+    width: 75%;
+    top: 0px;
+    bottom: 33px;
+    float: right;
+}
+#numbersright {
+    margin: 0px;
+    height: 165px;
+    width: 25%;
+    bottom: 33px;
+}
+#numbersleft > button {
+    width: 33%;
+    height: 25%;
+    margin: 0px;
+    float: left;
+}
+#buttontable {
+    position: absolute;
+    right: 0px;
+    left: 350px;
+    margin: 0px;
+    height: 100%;
+}
+#buttons {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    left: 15px;
+}
+#appcontainer {
+    position: absolute;
+    top: 85px;
+    /*bottom: 165px;*/
+    bottom: 0px;
+    left: 5px;
+    right: 5px;
+}
+#topseller {
+    position: absolute;
+    height: 150px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+}
+#tabs {
+    position: absolute;
+}
+#buttons > button {
+    float: left;
+    font-size: 1.5em;
+    height: 75px;
+}
+#tabs > div > button { font-size: 1.5em; }
+ul, li {
+    margin: 0px;
+    padding: 0px;
+}
+li {
+    list-style-type: none;
+    font-size: 1.2em;
+}
+input {
+    text-align: right;
+    width: 55px;
+    padding: 0px;
+    margin: 0px;
+}
+button.edit {
+    width: 35px;
+    height: 35px;
+}

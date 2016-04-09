@@ -1,0 +1,153 @@
+{% extends "pos/base_site.html" %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/checkout.css" />
+{% endblock %}
+
+{% block extrahead %}
+<script src="/static/js/jquery-1.12.2.min.js" type="text/javascript"></script>
+<script src="/static/js/checkout.js" type="text/javascript"></script>
+<!-- <script src="/static/js/csrf.js" type="text/javascript"></script> -->
+<script src="/static/js/autoresize.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+{% if categories %}
+
+<!-- Left bar -->
+<div id="offercontainer">
+<div id="offer">
+<button id="reset">Nuovo</button>&nbsp;
+<strong style="font-size: 1.2em">Totale: <span id="total">0,00</span> €</strong>
+<button id="send">Stampa</button>
+<br />
+{% if contributors %}
+Partecipante:
+<select id="contributors" autocomplete="off">
+    <option value="0" selected="selected">(persona generica)</option>
+{% for contributor in contributors %}
+    <option value="{{ contributor.id }}" class="coupon-{{ contributor.contrib_type.onceaday }}-{{ contributor.contrib_type.coupon }}">
+    {% if contributor.contrib_type.coupon > 0 and contributor.contrib_type.onceaday %}
+    {{ contributor }} - {{ contributor.contrib_type.coupon }} €
+    {% else %}
+    {{ contributor }}
+    {% endif %}
+    </option>
+{% endfor %}
+</select>
+{% endif %}
+<br />Paga in/con: <select id="payment_method">
+{% for char, payment_method in payment_methods %}
+    <option value="{{ char }}">{{ payment_method }}</option>
+{% endfor %}
+</select>
+<br />
+<hr />
+</div>
+
+<div id="items">
+<ul>
+</ul>
+</div>
+
+<div id="numbers">
+    <div style="height: 25px;">
+    Contanti: <input id="price" name="price" readonly="readonly" /> €
+    &nbsp;&nbsp;&nbsp;Resto: <span id="change">0,00</span> €
+    </div>
+    <div id="numbersleft">
+    <button id="number-1">1</button>
+    <button id="number-2">2</button>
+    <button id="number-3">3</button>
+    <button id="number-4">4</button>
+    <button id="number-5">5</button>
+    <button id="number-6">6</button>
+    <button id="number-7">7</button>
+    <button id="number-8">8</button>
+    <button id="number-9">9</button>
+    <button id="symbol-comma">,</button>
+    <button id="number-0">0</button>
+    <button id="operator-del">C</button>
+    </div>
+    <div id="numbersright">
+    {% if offers %}
+        <div style="text-align:center; height: {{ offers_height }}%"><strong>Offerte</strong></div>
+        {% for offer, offer_products in offers %}
+            <button id="button-offer-{{ offer.id }}" style="width: 100%; height: {{ offers_height }}%">{{ offer.name }}</button>
+        {% endfor %}
+    {% else %}
+        <div style="text-align:center; height: {{ offers_height }}%"><strong>Nessuna offerta definita</strong></div>
+    {% endif %}
+    </div>
+</div>
+</div>
+
+<!-- Button table -->
+<div id="buttontable">
+
+<div id="waiting" style="display: none;"><h2>Attendere prego...</h2>
+<p>Si consiglia di <b>non premere <i>Annulla</i></b> quando viene mostrata la finestra per la conferma della stampa, <b>ma di proseguire alla stampa dello scontrino dell'ordine anche se errato</b>, così da comunicare in seguito al supervisore l'identificativo dell'ordine da rettificare.</p>
+<p>Premere <i>Annulla</i> evita soltanto che l'ordine venga stampato, non lo cancella.</p>
+</div>
+
+<div id="buttons">{% for category in categories %}
+    <button id="button-{{ forloop.counter }}">{{ category.name }}</button>
+{% endfor %}
+</div>
+<div id="appcontainer">
+<div id="tabs">
+{% for category in categories %}
+    <div id="category-{{ forloop.counter }}">
+    {% for product in products %}
+        {% if product.productgroup == category %}
+        {% if product.color %}
+            <button style="color: {{ product.color }};" class="product-{{ product.id }}" {% if not product.availability %}disabled="disabled"{% endif %}>
+        {% else %}
+            <button class="product-{{ product.id }}" {% if not product.availability %}disabled="disabled"{% endif %}>
+        {% endif %}
+            <span class="name">{{ product.name }}</span><br />
+            <span class="price">{{ product.price|floatformat:2 }}</span> €
+        </button>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endfor %}
+</div>
+</div>
+
+<!--
+<div id="topseller">
+<div style="float: left; width: {{ topseller_width }}%; vertical-align: middle; text-align: center;">
+<br /><br /><strong>Prodotti più richiesti</strong>
+</div>
+{% for product in topsellers %}
+{% if product.color %}
+<button style="color: {{ product.color }}; float: left; width: {{ topseller_width }}%; height: 50%;" class="product-{{ product.id }}" {% if not product.availability %}disabled="disabled"{% endif %}>
+{% else %}
+<button style="float: left; width: {{ topseller_width }}%; height: 50%;" class="product-{{ product.id }}" {% if not product.availability %}disabled="disabled"{% endif %}>
+{% endif %}
+    <span class="name">{{ product.name }}</span><br />
+    <span class="price">{{ product.price|floatformat:2 }}</span> €
+</button>
+{% endfor %}
+</div>
+-->
+
+{% for offer, offer_products in offers %}
+<div id="offer-{{ offer.id }}" style="display: none;">
+<h3>{{ offer }}</h3>
+Costo: <span class="price">{{ offer.price }}</span> €
+<br /><br />
+{% for product in offer_products %}
+    <div id="offer-{{ offer.id }}-{{ product.id }}">{{ product }}</div>
+{% endfor %}
+</div>
+{% endfor %}
+</div>
+
+{% else %}
+<strong>Database privo di prodotti</strong>. Inseriscili attraverso l'<a href="/admin/pos/product/add/">interfaccia di amministrazione.</a>
+{% endif %}
+
+{% endblock %}

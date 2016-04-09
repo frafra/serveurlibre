@@ -1,0 +1,14 @@
+#container {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+}
+#content {
+    position: absolute;
+    top: 65px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px; 
+}

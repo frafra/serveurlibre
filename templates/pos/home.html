@@ -1,0 +1,22 @@
+{% extends "pos/base_site.html" %}
+
+{% block content %}
+<h1>Pagina iniziale</h1>
+<strong>Benvenuto!</strong>
+<h2>Dove mi trovo?</h2>
+<p>Sei sulla pagina principale del POS ServeurLibre.</p>
+<h2>Dove devo andare?</h2>
+<p>La barra superiore blu ti guiderà in tutte le parti del programma. Sono presenti alcuni collegamenti che ti permetteranno di spostarti comodamente tra un componente e l'altro, in base ai tuoi bisogni. Nello specifico:
+<ul>
+<li><a href="/">Pagina iniziale</a>: è la pagina che stai leggendo ora</li>
+<li><a href="/checkout/">Cassa</a>: porta alla scelta della cassa per iniziare a prendere ordini ed emettere scontrini</li>
+<li><a href="/report/">Report</a>: è la pagina dove vengono mostrati i dati e le statistiche</li>
+<li><a href="/static/archivio/localhost/">Archivio</a>: storico i report salvati attraverso l'utilità "fotografia.sh"</li>
+<li><a href="/admin/">Amministrazione</a>: previa autenticazione, permette di visionare e di modificare i dati del database</li>
+</ul>
+</p>
+<h2>Che programma è questo?</h2>
+<p>Questo programma è stato sviluppato su misura per la Festa Democratica dell'Adda Martesana, commissionato dal Circolo di Melzo. E' multipiattaforma, si può utilizzare via browser (Mozilla Firefox è consigliato per la fruizione dell'applicativo) ed utilizza le più recenti tecnologie web (HTML5, jQuery, AJAX). Si basa sul framenetwork Django ed è stato realizzato utilizzando esclusivamente software libero.</p>
+<h2>Chi l'ha creato?</h2>
+<p>E' stato interamente creato da Francesco Frassinelli (fraph24 <i>chiocciola</i> gmail.com).</p>
+{% endblock %}

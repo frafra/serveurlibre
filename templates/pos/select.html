@@ -1,0 +1,37 @@
+{% extends "pos/base_site.html" %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/css/reset.css" />
+<style type="text/css">
+#buttontable {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+}
+</style>
+{% endblock %}
+
+{% block extrahead %}
+<script src="/static/js/jquery-1.12.2.min.js" type="text/javascript"></script>
+<script src="/static/js/autoresize.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+{% if checkout %}
+<div id="buttontable">
+    {% for option in checkout %}
+        <button class="app-checkout" id="{{ option.id }}">{{ option.name }}</button>
+    {% endfor %}
+</div>
+<script>
+$(document).ready(function() {
+    autoresize('#buttontable', '#buttontable', 2, 0);
+    $('button').click(function() {document.location.href='./'+$(this).attr('id')+'/';});
+});
+</script>
+{% else %}
+<strong>Database privo di casse</strong>. Aggiungine una attraverso l'<a href="/admin/pos/checkout/add/">interfaccia di amministrazione.</a>
+{% endif %}
+{% endblock %}

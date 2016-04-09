@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | ServeurLibre{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">POS ServeurLibre</h1>
+{% endblock %}
+
+{% block nav-global %}
+<div style="padding: 1.2em 10px; font-size: 11px;">
+<a href="/">Pagina iniziale</a> /
+<a href="/checkout/">Cassa</a> /
+<a href="/report/">Report</a> /
+<a href="/static/archivio/localhost/">Archivio</a> /
+<a href="/admin/">Amministrazione</a> |
+<a href="#" onClick="window.location.reload(true);">Aggiorna pagina</a>
+</div>
+{% endblock %}
