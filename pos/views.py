@@ -3,7 +3,7 @@
 from pos.models import Checkout, Product, ProductGroup, Contributor, Offer, Order, OrderPart, OrderPartDetail#, LiquidTransaction
 from django.http import HttpResponse
 #from django.core.context_processors import csrf
-from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404, render_to_response
 from django.db.models import Sum
 from django.utils import timezone
 from settings import *
@@ -31,6 +31,7 @@ def select(request):
 
 first_value = lambda lst: [item[0] for item in lst]
 def checkout(request, checkout_id):
+    get_object_or_404(Checkout, pk=checkout_id)
     context = {}
     #context.update(csrf(request))
     context['title'] = "Cassa %s" % checkout_id
