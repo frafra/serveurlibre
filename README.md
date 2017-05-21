@@ -6,7 +6,7 @@ I choose to publish the code on GitHub under a free software license because it 
 
 It contains some comments in Italian (sorry about that), it uses jQuery without any fancy Bootstrap-like framework.
 
-Even if the code quality is not very high (there's plenty of room for optimization), but it works just fine: it has been able to manage about 100.000 orders using old computers without a hitch.
+Even if the code quality is not very high (there's plenty of room for optimization), the application works just fine: it has been able to manage about 100.000 orders using old computers without a hitch.
 
 ## Fedora kickstart file
 
