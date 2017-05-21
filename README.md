@@ -16,4 +16,9 @@ In order to make it easier to distribute and use this program, I made a Fedora k
 # setarch i686 livecd-creator --verbose --config=$(pwd)/tools/serveurlibre.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=23
 ```
 
+Please make sure to have installed these dependencies:
+```
+# dnf install livecd-tools spin-kickstarts
+```
+
 You can download the [resulting ISO](http://experimental.frafra.eu/ServeurLibre.iso) if you want to try it (user/password for the Django admin interface are both set to *admin*).
