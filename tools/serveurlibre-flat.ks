@@ -8,7 +8,7 @@ url --url="http://ba.mirror.garr.it/mirrors/fedora/linux/releases/$releasever/Ev
 # System language
 lang it_IT.UTF-8
 # Firewall configuration
-firewall --enabled --service=mdns
+firewall --enabled --service=mdns,http
 repo --name="fedora" --baseurl="http://ba.mirror.garr.it/mirrors/fedora/linux/releases/$releasever/Everything/$basearch/os/"
 repo --name="updates" --baseurl="http://ba.mirror.garr.it/mirrors/fedora/linux/releases/$releasever/Everything/$basearch/os/"
 # Shutdown after installation

@@ -2,6 +2,8 @@
 
 %include /usr/share/spin-kickstarts/fedora-live-xfce.ks
 
+firewall --enabled --service=mdns,http
+
 # italian language
 lang it_IT.UTF-8
 keyboard it
