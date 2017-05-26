@@ -211,8 +211,6 @@ chmod +x /etc/skel/Desktop/firefox.desktop
 
 # comment the "deactivate xfce4-panel first-run dialog" section in the ks flat file
 cp -rT /etc/skel /home/liveuser
-chown -R liveuser:liveuser /home/liveuser
-restorecon -R /home/liveuser
 
 cat > /lib/systemd/system/serveurlibre.service <<EOF
 [Unit]
