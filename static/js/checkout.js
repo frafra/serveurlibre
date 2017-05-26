@@ -14,6 +14,10 @@ coupon=0.00;
 reusable=false;
 done=0;
 
+$(document).ready(function() {
+    $('#offer select').select2();
+});
+
 // Reset dell'interfaccia
 function clean() {
     done=0;

@@ -565,7 +565,7 @@ systemctl enable serveurlibre.service
 
 %post --nochroot
 mkdir $INSTALL_ROOT/opt/serveurlibre
-git clone . $INSTALL_ROOT/opt/serveurlibre
+git clone --recursive . $INSTALL_ROOT/opt/serveurlibre
 chown -R root:wheel $INSTALL_ROOT/opt/serveurlibre
 chmod g+w $INSTALL_ROOT/opt/serveurlibre/{,*.db,pos/settings.py,static/archivio/localhost}
 %end
