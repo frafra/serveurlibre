@@ -60,6 +60,7 @@ cat > /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml <<EOF
         <value type="int" value="15"/>
         <value type="int" value="5"/>
         <value type="int" value="6"/>
+        <value type="int" value="16"/>
         <value type="int" value="2"/>
       </property>
     </property>
@@ -72,9 +73,11 @@ cat > /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml <<EOF
       <property name="expand" type="bool" value="true"/>
       <property name="style" type="uint" value="0"/>
     </property>
-    <property name="plugin-4" type="string" value="pager"/>
     <property name="plugin-5" type="string" value="clock"/>
     <property name="plugin-6" type="string" value="systray"/>
+    <property name="plugin-16" type="string" value="pulseaudio">
+      <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
+    </property>
   </property>
 </channel>
 EOF
