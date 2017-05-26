@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+from django.utils.encoding import python_2_unicode_compatible
+
 from django.db import models
 from django.utils import timezone
 from django.db.models import Count, Sum, Manager
@@ -7,6 +10,7 @@ import datetime
 
 # Definizione dei modelli
 
+@python_2_unicode_compatible
 class ProductGroup(models.Model):
     name = models.CharField(unique=True,
         max_length=64, verbose_name="Nome",
@@ -17,9 +21,10 @@ class ProductGroup(models.Model):
         verbose_name_plural = "gruppi di prodotti"
         ordering = ['name']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
+@python_2_unicode_compatible
 class Checkout(models.Model):
     name = models.CharField(unique=True,
         max_length=64, verbose_name="Nome",
@@ -31,9 +36,10 @@ class Checkout(models.Model):
         verbose_name = "cassa"
         verbose_name_plural = "casse"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
+#@python_2_unicode_compatible
 #class LiquidTransaction(models.Model):
 #    checkout = models.ForeignKey(Checkout,
 #        verbose_name=Checkout._meta.verbose_name)
@@ -48,10 +54,11 @@ class Checkout(models.Model):
 #        verbose_name = "transazione contante"
 #        verbose_name_plural = "transazioni contante"
 #
-#    def __unicode__(self):
+#    def __str__(self):
 #        return str(timezone.make_naive(self.date,
 #            timezone.get_default_timezone()))
 
+@python_2_unicode_compatible
 class Product(models.Model):
     name = models.CharField(unique=True,
         max_length=64, verbose_name="Nome",
@@ -78,9 +85,10 @@ class Product(models.Model):
         verbose_name_plural = "prodotti"
         ordering = ['name']
         
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
+@python_2_unicode_compatible
 class Offer(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Nome")
@@ -98,9 +106,10 @@ class Offer(models.Model):
         verbose_name = "offerta"
         verbose_name_plural = "offerte"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
+@python_2_unicode_compatible
 class ContributorGroup(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Nome",
@@ -111,9 +120,10 @@ class ContributorGroup(models.Model):
         verbose_name = "gruppo di partecipanti"
         verbose_name_plural = "gruppi di partecipanti"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
         
+@python_2_unicode_compatible
 class ContributorType(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Nome",
@@ -130,7 +140,7 @@ class ContributorType(models.Model):
         verbose_name = "tipologia partecipanti"
         verbose_name_plural = "tipologie di partecipanti"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class ContributorManager(models.Manager):
@@ -145,6 +155,7 @@ class ContributorManager(models.Manager):
                     query_set = query_set.exclude(pk=item.id)
         return query_set
                         
+@python_2_unicode_compatible
 class Contributor(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Identificativo")
@@ -160,7 +171,7 @@ class Contributor(models.Model):
         verbose_name = "partecipante"
         verbose_name_plural = "partecipanti"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 def when_clock_was_at(hours):
@@ -175,6 +186,7 @@ class OrderManager(models.Manager):
         return self.all().filter(date__gt=when_clock_was_at(6)) # Django >= 1.6
 
 first_value = lambda lst: [item[0] for item in lst]
+@python_2_unicode_compatible
 class Order(models.Model):
     date = models.DateTimeField(null=True, blank=True,
         verbose_name="Data")
@@ -242,10 +254,11 @@ class Order(models.Model):
         verbose_name_plural = "ordini"
         ordering = ['-date']
 
-    def __unicode__(self):
+    def __str__(self):
         return str(timezone.make_naive(self.date,
             timezone.get_default_timezone()))
 
+@python_2_unicode_compatible
 class OrderPart(models.Model):
     order = models.ForeignKey(Order,
         verbose_name=Order._meta.verbose_name)
@@ -294,9 +307,10 @@ class OrderPart(models.Model):
         verbose_name = "porzione ordine"
         verbose_name_plural = "porzioni ordini"
 
-    def __unicode__(self):
-        return u"%s - %s" % (self.order, self.offer or "(nessuno)")
+    def __str__(self):
+        return "%s - %s" % (self.order, self.offer or "(nessuno)")
 
+@python_2_unicode_compatible
 class OrderPartDetail(models.Model):
     name = models.CharField(null=True,
         max_length=64, editable=False)
@@ -326,5 +340,5 @@ class OrderPartDetail(models.Model):
         verbose_name_plural = "dettaglio ordini"
         unique_together = ('product', 'orderpart')
 
-    def __unicode__(self):
-        return u"%s - %s" % (self.orderpart, self.product)
+    def __str__(self):
+        return "%s - %s" % (self.orderpart, self.product)

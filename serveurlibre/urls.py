@@ -6,7 +6,6 @@ from django.contrib.staticfiles import views
 admin.autodiscover()
 
 import os
-import settings
 
 urlpatterns = [
     url(r'^static/(?P<path>.*)$', views.serve),

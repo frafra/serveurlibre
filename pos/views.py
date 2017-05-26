@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.db.models import Sum
 from django.utils import timezone
-from settings import *
+from .settings import *
 
 # Cocidi speciali per la stampa su stampanti termiche di tipo Meteor Sprint B
 sprint_b = {
@@ -78,7 +78,7 @@ def save(request, payment_method, checkout_id, contributor_id=0):
                 order.save(lazy=True)
                 # Parsing ed il processamento dei prodotti
                 tmp = {}
-                for product, quantity in request.POST.iteritems():
+                for product, quantity in request.POST.items():
                     if '-' in product: # Se '-' è presente significa che è stata associata una offerta
                         offer = int(product.split('-')[1])
                         # Raggruppa i prodotti in base all'offerta associata
@@ -91,13 +91,13 @@ def save(request, payment_method, checkout_id, contributor_id=0):
                             tmp[0] = {}
                         tmp[0][int(product)] = int(quantity)
                 # Salvataggio dei dettagli prodotto, porzioni di prodotto e associazione all'ordine
-                for offer, values in tmp.iteritems():
+                for offer, values in tmp.items():
                     if offer == 0:
                         part = OrderPart(order=order)
                     else:
                         part = OrderPart(order=order, offer=Offer.objects.get(pk=offer))
                     part.save(lazy=True)
-                    for product, quantity in values.iteritems():
+                    for product, quantity in values.items():
                         orderPartDetail = OrderPartDetail(
                             product=Product.objects.get(pk=product),
                             quantity=quantity, orderpart=part)
@@ -196,7 +196,7 @@ def print_order(request, order_id):
                 if orderpartdetail.product.productgroup not in details:
                     details[orderpartdetail.product.productgroup] = []
                 details[orderpartdetail.product.productgroup].append("%dx %s (%s)\n" % (orderpartdetail.quantity, orderpartdetail.product, orderpart.offer))
-            last=("%dx %s" % (orderpartdetail.quantity, orderpart.offer)).decode("utf-8")
+            last=("%dx %s" % (orderpartdetail.quantity, orderpart.offer))
             response.write(last)
             response.write(("%.2f euro" % (orderpart.offer.price*orderpartdetail.quantity)).rjust(sprint_b['line_length']-len(last)))
             response.write("\n")
@@ -205,7 +205,7 @@ def print_order(request, order_id):
                 if orderpartdetail.product.productgroup not in details:
                     details[orderpartdetail.product.productgroup] = []
                 details[orderpartdetail.product.productgroup].append("%dx %s\n" % (orderpartdetail.quantity, orderpartdetail.product))
-                last=("%dx %s" % (orderpartdetail.quantity, orderpartdetail.product)).decode("utf-8")
+                last=("%dx %s" % (orderpartdetail.quantity, orderpartdetail.product))
                 response.write(last)
                 response.write(str("%.2f euro" % orderpartdetail.amount).rjust(sprint_b['line_length']-len(last)))
                 response.write("\n")
@@ -224,7 +224,7 @@ def print_order(request, order_id):
     response.write(sprint_b['bottom'])
     response.write(sprint_b['partial_cut'])
     response.write(sprint_b['double_height_on'])
-    for group, detail in details.iteritems(): # Stampa della comanda divisa per categoria
+    for group, detail in details.items(): # Stampa della comanda divisa per categoria
         response.write("* Comanda *".center(sprint_b['line_length']))
         response.write("\n\n")
         response.write("%s %d %s\n\n" % (date, order.id, checkout))
