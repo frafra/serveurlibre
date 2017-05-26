@@ -13,7 +13,7 @@ Even if the code quality is not very high (there's plenty of room for optimizati
 In order to make it easier to distribute and use this program, I made a Fedora kickstart file (you can find it under *tools/serveurlibre.ks*; be sure to change paths accordingly with your configuration), which produces an unbranded Fedora XFCE Live respin with a single command, like:
 
 ```
-# setarch i686 livecd-creator --verbose --config=$(pwd)/tools/serveurlibre.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=25
+# setarch i686 livecd-creator --verbose --config=$(pwd)/tools/serveurlibre-flat.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=25
 ```
 
 Please make sure to have installed these dependencies:
