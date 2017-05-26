@@ -598,8 +598,6 @@ kernel
 kernel-modules
 kernel-modules-extra
 langpacks-it
-libreoffice
-libreoffice-langpack-it
 memtest86+
 python-django
 pytz

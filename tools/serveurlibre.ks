@@ -31,10 +31,6 @@ pytz
 -@xfce-media
 -@xfce-office
 
-# libreoffice
-libreoffice
-libreoffice-langpack-it
-
 -abrt*
 -claws*
 
