@@ -8,10 +8,9 @@ keyboard it
 timezone Europe/Rome
 
 %packages
-@italian-support
+langpacks-it
 
 # exclude input methods
--ibus*
 -m17n*
 -scim*
 
@@ -34,13 +33,11 @@ pytz
 libreoffice
 libreoffice-langpack-it
 
-# replace Midori with Firefox
--midori
-firefox
-
 -abrt*
 -claws*
--firewalld
+
+# fixes
+realmd
 %end
 
 %post
