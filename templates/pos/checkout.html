@@ -30,11 +30,7 @@ Partecipante:
     <option value="0" selected="selected">(persona generica)</option>
 {% for contributor in contributors %}
     <option value="{{ contributor.id }}" class="coupon-{{ contributor.contrib_type.onceaday }}-{{ contributor.contrib_type.coupon }}">
-    {% if contributor.contrib_type.coupon > 0 and contributor.contrib_type.onceaday %}
-    {{ contributor }} - {{ contributor.contrib_type.coupon }} €
-    {% else %}
     {{ contributor }}
-    {% endif %}
     </option>
 {% endfor %}
 </select>

@@ -19,7 +19,7 @@ button[disabled] {
     overflow-y: scroll;
     overflow-x: auto;
     position: absolute;
-    top: 80px;
+    top: 60px;
     bottom: 205px;
     width: 100%;
 }
@@ -110,4 +110,8 @@ button.edit {
     border-radius: .5em;
     width: 150px;
     height: 50px;
+}
+
+#offercontainer .select2-container {
+    width: 240px !important;
 }
