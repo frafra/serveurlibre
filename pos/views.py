@@ -109,6 +109,12 @@ def save(request, payment_method, checkout_id, contributor_id=0):
     except:
         return HttpResponse('ERROR')
 
+def change_payment_method(request, order_id, payment_method):
+    order = Order.objects.get(pk=order_id)
+    order.payment_method = payment_method
+    order.save()
+    return HttpResponse('OK')
+
 def report(request):
     """ Codice per la generazione del report """
     # Codice disabilitato per la gestione del prelievo e dei vessamenti da/per le casse (LiquidTransaction)

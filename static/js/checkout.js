@@ -37,6 +37,8 @@ function clean() {
     $('#buttons > button[id^=button-]').css('display', 'inline');
     $('#numbersright').css('visibility', 'visible');
     $('#waiting').css('display', 'none');
+    $('#waiting > button').css('background-color', '');
+    $('#waiting > button').first().css('background-color', 'lightblue');
 }
 
 function new_ticket() { // modifica del 6 luglio 2013
@@ -252,7 +254,7 @@ function save() {
             });
             if ($('#contributors').length) contributor=$('#contributors').val();
             else contributor=0;
-            payment_method=$('#payment_method').val();
+            payment_method='C';
             if (contributor==0) {
                 url='./'+payment_method+'/save/';
             } else {
@@ -413,6 +415,15 @@ $(document).ready(function() {
             scrolltop();
         }
         change_value(id, element, 1);
+    });
+
+    $('#waiting > button').click(function(event) {
+        url='../../change/'+last_order+'/payment_method/'+event.target.value+'/';
+        event.target.style.backgroundColor='yellow';
+        $.get(url, function(response) {
+            $('#waiting > button').css('background-color', '');
+            event.target.style.backgroundColor='lightblue';
+        });
     });
 
     /* Setup send button */

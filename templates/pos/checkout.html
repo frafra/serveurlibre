@@ -39,11 +39,6 @@ Partecipante:
 {% endfor %}
 </select>
 {% endif %}
-<br />Paga in/con: <select id="payment_method">
-{% for char, payment_method in payment_methods %}
-    <option value="{{ char }}">{{ payment_method }}</option>
-{% endfor %}
-</select>
 <br />
 <hr />
 </div>
@@ -88,7 +83,12 @@ Partecipante:
 <!-- Button table -->
 <div id="buttontable">
 
-<div id="waiting" style="display: none;"><h2>Attendere prego...</h2>
+<div id="waiting" style="display: none;">
+<h2>Metodo di pagamento scelto</h2>
+{% for char, payment_method in payment_methods %}
+    <button value="{{ char }}">{{ payment_method }}</button>
+{% endfor %}
+<h2>Attendere prego...</h2>
 <p>Si consiglia di <b>non premere <i>Annulla</i></b> quando viene mostrata la finestra per la conferma della stampa, <b>ma di proseguire alla stampa dello scontrino dell'ordine anche se errato</b>, così da comunicare in seguito al supervisore l'identificativo dell'ordine da rettificare.</p>
 <p>Premere <i>Annulla</i> evita soltanto che l'ordine venga stampato, non lo cancella.</p>
 </div>
