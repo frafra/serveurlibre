@@ -21,4 +21,4 @@ Please make sure to have installed these dependencies:
 # dnf install livecd-tools git
 ```
 
-You can download the [resulting ISO](https://arm.frafra.eu/serveurlibre/ServeurLibre-20170604-1.iso) if you want to try it (user/password for the Django admin interface are both set to *admin*).
+user/password for the Django admin interface are both set to *admin*.
