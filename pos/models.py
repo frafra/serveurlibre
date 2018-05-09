@@ -10,7 +10,6 @@ import datetime
 
 # Definizione dei modelli
 
-@python_2_unicode_compatible
 class ProductGroup(models.Model):
     name = models.CharField(unique=True,
         max_length=64, verbose_name="Nome",
@@ -24,7 +23,6 @@ class ProductGroup(models.Model):
     def __str__(self):
         return self.name
 
-@python_2_unicode_compatible
 class Checkout(models.Model):
     name = models.CharField(unique=True,
         max_length=64, verbose_name="Nome",
@@ -39,7 +37,6 @@ class Checkout(models.Model):
     def __str__(self):
         return self.name
 
-#@python_2_unicode_compatible
 #class LiquidTransaction(models.Model):
 #    checkout = models.ForeignKey(Checkout,
 #        verbose_name=Checkout._meta.verbose_name)
@@ -58,7 +55,6 @@ class Checkout(models.Model):
 #        return str(timezone.make_naive(self.date,
 #            timezone.get_default_timezone()))
 
-@python_2_unicode_compatible
 class Product(models.Model):
     name = models.CharField(unique=True,
         max_length=64, verbose_name="Nome",
@@ -88,7 +84,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-@python_2_unicode_compatible
 class Offer(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Nome")
@@ -109,7 +104,6 @@ class Offer(models.Model):
     def __str__(self):
         return self.name
 
-@python_2_unicode_compatible
 class ContributorGroup(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Nome",
@@ -123,7 +117,6 @@ class ContributorGroup(models.Model):
     def __str__(self):
         return self.name
         
-@python_2_unicode_compatible
 class ContributorType(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Nome",
@@ -155,7 +148,6 @@ class ContributorManager(models.Manager):
                     query_set = query_set.exclude(pk=item.id)
         return query_set
                         
-@python_2_unicode_compatible
 class Contributor(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Identificativo")
@@ -188,7 +180,6 @@ class OrderManager(models.Manager):
         return self.all().filter(date__gt=when_clock_was_at(6)) # Django >= 1.6
 
 first_value = lambda lst: [item[0] for item in lst]
-@python_2_unicode_compatible
 class Order(models.Model):
     date = models.DateTimeField(null=True, blank=True,
         verbose_name="Data")
@@ -260,7 +251,6 @@ class Order(models.Model):
         return str(timezone.make_naive(self.date,
             timezone.get_default_timezone()))
 
-@python_2_unicode_compatible
 class OrderPart(models.Model):
     order = models.ForeignKey(Order,
         verbose_name=Order._meta.verbose_name,
@@ -313,7 +303,6 @@ class OrderPart(models.Model):
     def __str__(self):
         return "%s - %s" % (self.order, self.offer or "(nessuno)")
 
-@python_2_unicode_compatible
 class OrderPartDetail(models.Model):
     name = models.CharField(null=True,
         max_length=64, editable=False)
