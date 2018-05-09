@@ -39,6 +39,8 @@ function clean() {
     $('#waiting').css('display', 'none');
     $('#waiting > button').css('background-color', '');
     $('#waiting > button').first().css('background-color', 'lightblue');
+    $('#offer select').val('0');
+    $('#offer select').trigger('change');
 }
 
 function new_ticket() { // modifica del 6 luglio 2013
