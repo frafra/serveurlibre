@@ -160,10 +160,12 @@ class Contributor(models.Model):
     name = models.CharField(unique=True, max_length=64,
         verbose_name="Identificativo")
     contrib_type = models.ForeignKey(ContributorType,
-        verbose_name=ContributorType._meta.verbose_name)
+        verbose_name=ContributorType._meta.verbose_name,
+        on_delete=models.PROTECT)
     contrib_group = models.ForeignKey(ContributorGroup,
         verbose_name=ContributorGroup._meta.verbose_name,
-        blank=True, null=True)
+        blank=True, null=True,
+        on_delete=models.SET_NULL)
     note = models.TextField(blank=True, verbose_name="Note")
     objects = ContributorManager()
     
@@ -261,7 +263,8 @@ class Order(models.Model):
 @python_2_unicode_compatible
 class OrderPart(models.Model):
     order = models.ForeignKey(Order,
-        verbose_name=Order._meta.verbose_name)
+        verbose_name=Order._meta.verbose_name,
+        on_delete=models.CASCADE)
     offer = models.ForeignKey(Offer,
         verbose_name=Offer._meta.verbose_name,
         on_delete=models.PROTECT, null=True, blank=True)
@@ -318,7 +321,8 @@ class OrderPartDetail(models.Model):
         verbose_name=Product._meta.verbose_name, null=True)
     quantity = models.IntegerField(verbose_name="Quantità")
     orderpart = models.ForeignKey(OrderPart,
-        verbose_name=OrderPart._meta.verbose_name)
+        verbose_name=OrderPart._meta.verbose_name,
+        on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=8, decimal_places=2,
         verbose_name="Totale",
         null=True, default=None, editable=False)
