@@ -12,13 +12,20 @@ Even if the code quality is not very high (there's plenty of room for optimizati
 
 In order to make it easier to distribute and use this program, I made a Fedora kickstart file (you can find it under *tools/serveurlibre.ks*; be sure to change paths accordingly with your configuration), which produces an unbranded Fedora XFCE Live respin with a single command, like:
 
-```
-# setarch i686 livecd-creator --verbose --config=$(pwd)/tools/serveurlibre-flat.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=25
-```
-
 Please make sure to have installed these dependencies:
+
 ```
 # dnf install livecd-tools git
+# setarch i686 livecd-creator --verbose --config=$(pwd)/tools/serveurlibre-flat.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=28
 ```
+
+In order to produce a new flattened kickstart file, this procedure can be used:
+
+```
+# dnf install fedora-kickstarts ksflatten
+$ ksflatten --config tools/serveurlibre.ks -o tools/serveurlibre-flat.ks --version F28
+```
+
+## Demo
 
 user/password for the Django admin interface are both set to *admin*.

@@ -24,7 +24,7 @@ generic-release
 generic-logos
 
 # dependencies
-python-django
+python3-django
 pytz
 
 # unneeded groups

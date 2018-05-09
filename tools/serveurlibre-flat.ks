@@ -3,22 +3,24 @@
 xconfig  --startxonboot
 # Keyboard layouts
 keyboard 'it'
-# Use network installation
-url --url="http://ba.mirror.garr.it/mirrors/fedora/linux/releases/$releasever/Everything/$basearch/os/"
+# Root password
+rootpw --iscrypted --lock locked
 # System language
 lang it_IT.UTF-8
-# Firewall configuration
-firewall --enabled --service=mdns,http
-repo --name="fedora" --baseurl="http://ba.mirror.garr.it/mirrors/fedora/linux/releases/$releasever/Everything/$basearch/os/"
-repo --name="updates" --baseurl="http://ba.mirror.garr.it/mirrors/fedora/linux/releases/$releasever/Everything/$basearch/os/"
 # Shutdown after installation
 shutdown
-# Network information
-network  --bootproto=dhcp --device=link --activate
 # System timezone
 timezone Europe/Rome
+# Network information
+network  --bootproto=dhcp --device=link --activate
+repo --name="fedora" --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch
+repo --name="updates" --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f$releasever&arch=$basearch
+# Use network installation
+url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
 # System authorization information
 auth --useshadow --passalgo=sha512
+# Firewall configuration
+firewall --enabled --service=mdns,http
 # SELinux configuration
 selinux --enforcing
 
@@ -144,7 +146,7 @@ if [ -n "\$configdone" ]; then
   exit 0
 fi
 
-# add fedora user with no passwd
+# add liveuser user with no passwd
 action "Adding live user" useradd \$USERADDARGS -c "Live System User" liveuser
 passwd -d liveuser > /dev/null
 usermod -aG wheel liveuser > /dev/null
@@ -347,7 +349,7 @@ rm -f /etc/xdg/autostart/xfconf-migration-4.6.desktop || :
 
 # deactivate xfce4-panel first-run dialog (#693569)
 mkdir -p /home/liveuser/.config/xfce4/xfconf/xfce-perchannel-xml
-#cp /etc/xdg/xfce4/panel/default.xml /home/liveuser/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+cp /etc/xdg/xfce4/panel/default.xml /home/liveuser/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 
 # set up lightdm autologin
 sed -i 's/^#autologin-user=.*/autologin-user=liveuser/' /etc/lightdm/lightdm.conf
@@ -361,6 +363,9 @@ sed -i 's/^#user-session=.*/user-session=xfce/' /etc/lightdm/lightdm.conf
 sed -i -e 's/NoDisplay=true/NoDisplay=false/' /usr/share/applications/liveinst.desktop
 mkdir /home/liveuser/Desktop
 cp /usr/share/applications/liveinst.desktop /home/liveuser/Desktop
+
+# no updater applet in live environment
+rm -f /etc/xdg/autostart/org.mageia.dnfdragora-updater.desktop
 
 # and mark it as executable (new Xfce security feature)
 chmod +x /home/liveuser/Desktop/liveinst.desktop
@@ -588,28 +593,24 @@ chmod g+w $INSTALL_ROOT/opt/serveurlibre/{,*.db,pos/settings.py,static/archivio/
 aajohan-comfortaa-fonts
 anaconda
 dracut-live
-firefox
 generic-logos
 generic-release
 glibc-all-langpacks
 gnome-keyring-pam
-grub2-efi
 kernel
 kernel-modules
 kernel-modules-extra
 langpacks-it
 memtest86+
-python-django
+python3-django
 pytz
 realmd
-rfkill
 syslinux
 system-config-printer
 wget
 xscreensaver-extras
 -@xfce-media
 -@xfce-office
--PackageKit*
 -abrt*
 -acpid
 -aspell-*
@@ -619,6 +620,7 @@ xscreensaver-extras
 -desktop-backgrounds-basic
 -fedora-logos
 -fedora-release
+-foomatic-db-ppds
 -gimp-help
 -hplip
 -isdn4k-utils
