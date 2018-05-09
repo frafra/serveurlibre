@@ -1,4 +1,5 @@
 {% extends "pos/base_site.html" %}
+{% load humanize %}
 
 {% block content %}
 <h1>Report</h1>
@@ -7,20 +8,20 @@
 
 <div style="width: 50%; float: left">
 <h2>Ammontare incassato complessivo</h2>
-<h3>Totale: {{ every }} €</h3>
-Contanti: {{ every_cash }} €<br />
-Carta di credito: {{ every_card }} €<br />
-Bancomat: {{ every_bancomat }} €<br />
-Altro: {{ every_other }} €
+<h3>Totale: {{ every | intcomma }} €</h3>
+Contanti: {{ every_cash | intcomma }} €<br />
+Carta di credito: {{ every_card | intcomma }} €<br />
+Bancomat: {{ every_bancomat | intcomma }} €<br />
+Altro: {{ every_other | intcomma }} €
 </div>
 
 <div style="width: 50%; float: right">
 <h2>Ammontare incassato nell'attuale giornata lavorativa</h2>
-<h3>Totale: {{ today }} €</h3>
-Contanti: {{ cash }} €<br />
-Carta di credito: {{ card }} €<br />
-Bancomat: {{ bancomat }} €<br />
-Altro: {{ other }} €
+<h3>Totale: {{ today | intcomma }} €</h3>
+Contanti: {{ cash | intcomma }} €<br />
+Carta di credito: {{ card | intcomma }} €<br />
+Bancomat: {{ bancomat | intcomma }} €<br />
+Altro: {{ other | intcomma }} €
 </div>
 
 </div>
@@ -41,7 +42,7 @@ Altro: {{ other }} €
 <h3>{{ group }}</h3>
 <ul>
 {% for product in products %}
-<li>"<b>{{ product }}</b>": {% if product.num_products %}{{ product.num_products }}{% else %}0{% endif %} unità</li>
+<li>"<b>{{ product }}</b>": {% if product.num_products %}{{ product.num_products | intcomma }}{% else %}0{% endif %} unità</li>
 {% endfor %}
 </ul>
 {% endfor %}
@@ -54,7 +55,7 @@ Altro: {{ other }} €
 <h3>{{ group }}</h3>
 <ul>
 {% for product, quantity in detail.items %}
-    <li>Venduti {{ quantity }} "<b>{{ product }}</b>"</li>
+    <li>Venduti {{ quantity | intcomma }} "<b>{{ product }}</b>"</li>
 {% endfor %}
 </ul>
 {% endfor %}
@@ -62,7 +63,7 @@ Altro: {{ other }} €
 <h2>I 10 articoli più venduti di sempre</h2>
 <ol>
 {% for topseller in topsellers %}
-    <li>"<b>{{ topseller }}</b>": {% if topseller.num_products %}{{ topseller.num_products }}{% else %}0{% endif %} unità</li>
+    <li>"<b>{{ topseller }}</b>": {% if topseller.num_products %}{{ topseller.num_products | intcomma }}{% else %}0{% endif %} unità</li>
 {% endfor %}
 </ol>
 

@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     #'django.contrib.admindocs',
     'pos',
     #'gunicorn',
+    'django.contrib.humanize',
 )
 
 # A sample logging configuration. The only tangible logging
