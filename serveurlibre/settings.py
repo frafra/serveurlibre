@@ -169,3 +169,5 @@ LOGGING = {
 
 from django.conf.locale.it import formats
 formats.DATETIME_FORMAT = 'l d F Y H:i:s'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

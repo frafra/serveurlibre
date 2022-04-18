@@ -3,7 +3,7 @@
 from pos.models import Checkout, Product, ProductGroup, Contributor, Offer, Order, OrderPart, OrderPartDetail#, LiquidTransaction
 from django.http import HttpResponse
 #from django.core.context_processors import csrf
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render
 from django.db.models import Sum
 from django.utils import timezone
 from .settings import *
@@ -21,13 +21,13 @@ sprint_b = {
 }
 
 def home(request):
-    return render_to_response('pos/home.html', {'title':"Pagina iniziale"})
+    return render(request, 'pos/home.html', {'title':"Pagina iniziale"})
 
 def select(request):
     context = {}
     context['title'] = "Seleziona cassa"
     context['checkout'] = Checkout.objects.all().order_by('name')
-    return render_to_response('pos/select.html', context)
+    return render(request, 'pos/select.html', context)
 
 first_value = lambda lst: [item[0] for item in lst]
 def checkout(request, checkout_id):
@@ -60,7 +60,7 @@ def checkout(request, checkout_id):
     context['offers'] = offers
     context['offers_height'] = offers_height
     context['payment_methods'] = payment_methods
-    return render_to_response('pos/checkout.html', context)
+    return render(request, 'pos/checkout.html', context)
 
 def save(request, payment_method, checkout_id, contributor_id=0):
     """ Funzione per il salvataggio dell'ordine """
@@ -173,7 +173,7 @@ def report(request):
     context['every_bancomat'] = every_bancomat
     context['every_other'] = every_other
     context['grouped'] = grouped
-    return render_to_response('pos/report.html', context)
+    return render(request, 'pos/report.html', context)
 
 def print_order(request, order_id):
     """ Codice per la stampa dell'ordine """

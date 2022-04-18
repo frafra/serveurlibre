@@ -1,2 +1,1 @@
-Django~=2.0.8 
-pytz==2018.9
+Django~=4.0
