@@ -48,9 +48,7 @@ def checkout(request, checkout_id):
     offers_height = int(100.0/(len(offers)+1))
     payment_methods = (
         ("C", "Contanti"),
-        ("T", "Carta di credito"),
-        ("B", "Bancomat"),
-        ("A", "Altro"),
+        ("P", "POS"),
     )
     context['products'] = products
     context['categories'] = categories
@@ -140,16 +138,12 @@ def report(request):
     # Incassi giornalieri
     today = today_orders.aggregate(Sum('amount'))['amount__sum'] or 0
     cash = today_orders.filter(payment_method="C").aggregate(Sum('amount'))['amount__sum'] or 0
-    card = today_orders.filter(payment_method="T").aggregate(Sum('amount'))['amount__sum'] or 0
-    bancomat = today_orders.filter(payment_method="B").aggregate(Sum('amount'))['amount__sum'] or 0
-    other = today_orders.filter(payment_method="A").aggregate(Sum('amount'))['amount__sum'] or 0
+    pos = today_orders.filter(payment_method="P").aggregate(Sum('amount'))['amount__sum'] or 0
     # Incassi totali
     orders = Order.objects.all()
     every = orders.aggregate(Sum('amount'))['amount__sum'] or 0
     every_cash = orders.filter(payment_method="C").aggregate(Sum('amount'))['amount__sum'] or 0
-    every_card = orders.filter(payment_method="T").aggregate(Sum('amount'))['amount__sum'] or 0
-    every_bancomat = orders.filter(payment_method="B").aggregate(Sum('amount'))['amount__sum'] or 0
-    every_other = orders.filter(payment_method="A").aggregate(Sum('amount'))['amount__sum'] or 0
+    every_pos = orders.filter(payment_method="P").aggregate(Sum('amount'))['amount__sum'] or 0
     # Riepilogo dei prodotti con le relative quantità vendute
     grouped = {}
     groups = ProductGroup.objects.all().order_by('name')
@@ -164,14 +158,10 @@ def report(request):
     context['topsellers'] = topsellers
     context['today'] = today
     context['cash'] = cash
-    context['card'] = card
-    context['bancomat'] = bancomat
-    context['other'] = other
+    context['pos'] = pos
     context['every'] = every
     context['every_cash'] = every_cash
-    context['every_card'] = every_card
-    context['every_bancomat'] = every_bancomat
-    context['every_other'] = every_other
+    context['every_pos'] = every_pos
     context['grouped'] = grouped
     return render(request, 'pos/report.html', context)
 

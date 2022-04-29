@@ -10,18 +10,14 @@
 <h2>Ammontare incassato complessivo</h2>
 <h3>Totale: {{ every | intcomma }} €</h3>
 Contanti: {{ every_cash | intcomma }} €<br />
-Carta di credito: {{ every_card | intcomma }} €<br />
-Bancomat: {{ every_bancomat | intcomma }} €<br />
-Altro: {{ every_other | intcomma }} €
+POS: {{ every_pos | intcomma }} €
 </div>
 
 <div style="width: 50%; float: right">
 <h2>Ammontare incassato nell'attuale giornata lavorativa</h2>
 <h3>Totale: {{ today | intcomma }} €</h3>
 Contanti: {{ cash | intcomma }} €<br />
-Carta di credito: {{ card | intcomma }} €<br />
-Bancomat: {{ bancomat | intcomma }} €<br />
-Altro: {{ other | intcomma }} €
+POS: {{ pos | intcomma }} €
 </div>
 
 </div>
