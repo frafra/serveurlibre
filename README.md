@@ -16,14 +16,14 @@ Please make sure to have installed these dependencies:
 
 ```
 # dnf install livecd-tools git
-# setarch i686 livecd-creator --verbose --config=$(pwd)/tools/serveurlibre-flat.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=28
+# livecd-creator --verbose --config=$(pwd)/tools/serveurlibre-flat.ks --fslabel=ServeurLibre --cache=/var/cache/live --releasever=34
 ```
 
 In order to produce a new flattened kickstart file, this procedure can be used:
 
 ```
-# dnf install fedora-kickstarts ksflatten
-$ ksflatten --config tools/serveurlibre.ks -o tools/serveurlibre-flat.ks --version F28
+# dnf install fedora-kickstarts
+$ ksflatten --config tools/serveurlibre.ks -o tools/serveurlibre-flat.ks --version F34
 ```
 
 ## Demo

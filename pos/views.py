@@ -5,7 +5,7 @@ from django.http import HttpResponse
 #from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Sum
-from django.utils import timezone
+import datetime
 from .settings import *
 
 # Cocidi speciali per la stampa su stampanti termiche di tipo Meteor Sprint B
@@ -181,7 +181,7 @@ def print_order(request, order_id):
     response = HttpResponse(content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename=pos-%d.txt' % order.id
     response.write(sprint_b['top'])
-    date = timezone.localtime(order.date)
+    date = datetime.datetime.strftime(datetime.datetime.now(), '%d-%m-%Y %H:%M:%S')
     orderparts = OrderPart.objects.filter(order=order_id)
     checkout = Checkout.objects.get(pk=order.checkout_id)
     details = {}
