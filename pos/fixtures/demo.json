@@ -1,0 +1,117 @@
+[
+  {
+    "model": "pos.productgroup",
+    "pk": 1,
+    "fields": {
+      "name": "Primi"
+    }
+  },
+  {
+    "model": "pos.productgroup",
+    "pk": 2,
+    "fields": {
+      "name": "Secondi"
+    }
+  },
+  {
+    "model": "pos.productgroup",
+    "pk": 3,
+    "fields": {
+      "name": "Dolci"
+    }
+  },
+  {
+    "model": "pos.checkout",
+    "pk": 1,
+    "fields": {
+      "name": "Cassa 1",
+      "position": ""
+    }
+  },
+  {
+    "model": "pos.checkout",
+    "pk": 2,
+    "fields": {
+      "name": "Cassa 2",
+      "position": ""
+    }
+  },
+  {
+    "model": "pos.product",
+    "pk": 1,
+    "fields": {
+      "name": "Pasta al sugo",
+      "price": "4.00",
+      "productgroup": 1,
+      "availability": null,
+      "position": null,
+      "color": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "pos.product",
+    "pk": 2,
+    "fields": {
+      "name": "Pasta al pesto",
+      "price": "5.00",
+      "productgroup": 1,
+      "availability": null,
+      "position": null,
+      "color": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "pos.product",
+    "pk": 3,
+    "fields": {
+      "name": "Cotoletta",
+      "price": "5.00",
+      "productgroup": 2,
+      "availability": 20,
+      "position": null,
+      "color": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "pos.product",
+    "pk": 4,
+    "fields": {
+      "name": "Cozze",
+      "price": "7.00",
+      "productgroup": 2,
+      "availability": 20,
+      "position": null,
+      "color": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "pos.product",
+    "pk": 5,
+    "fields": {
+      "name": "Gelato al limone",
+      "price": "3.00",
+      "productgroup": 3,
+      "availability": 30,
+      "position": null,
+      "color": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "pos.product",
+    "pk": 6,
+    "fields": {
+      "name": "Gelato alla fragola",
+      "price": "3.00",
+      "productgroup": 3,
+      "availability": 50,
+      "position": null,
+      "color": null,
+      "note": ""
+    }
+  }
+]
