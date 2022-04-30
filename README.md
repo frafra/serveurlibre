@@ -28,4 +28,5 @@ $ ksflatten --config tools/serveurlibre.ks -o tools/serveurlibre-flat.ks --versi
 
 ## Demo
 
+Create a default user using `./manage.py loaddata admin`.
 user/password for the Django admin interface are both set to *admin*.
