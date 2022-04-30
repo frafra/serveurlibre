@@ -262,22 +262,24 @@ function save() {
             } else {
                 url='./'+payment_method+'/'+contributor+'/save/';
             }
-            $.post(url, info, function(response) {
-                if (response!='ERROR') {
-                    if (contributor!=0) {
-                        onceaday=$('#contributors option[value=\''+contributor+'\']').prop('class').split('-')[1];
-                        if (onceaday=='True') $('#contributors option[value=\''+contributor+'\']').remove();
-                    }
-                    done=1;
-                    last_order=response;
-                    $('#topseller > button').css('display', 'none');
-                    $('#items * button').prop('disabled', 'disabled');
-                    $('#buttons > button[id^=button-]').css('display', 'none');
-                    $('#numbersright').css('visibility', 'hidden');
-                    $('[id^=category-]').css('display', 'none');
-                    $('#waiting').css('display', 'inline');
-                    print();
+            $.post(url, info)
+            .done(function(response) {
+                if (contributor!=0) {
+                    onceaday=$('#contributors option[value=\''+contributor+'\']').prop('class').split('-')[1];
+                    if (onceaday=='True') $('#contributors option[value=\''+contributor+'\']').remove();
                 }
+                done=1;
+                last_order=response;
+                $('#topseller > button').css('display', 'none');
+                $('#items * button').prop('disabled', 'disabled');
+                $('#buttons > button[id^=button-]').css('display', 'none');
+                $('#numbersright').css('visibility', 'hidden');
+                $('[id^=category-]').css('display', 'none');
+                $('#waiting').css('display', 'inline');
+                print();
+            })
+            .fail(function(response) {
+                alert(response.responseText);
             });
         }
     }

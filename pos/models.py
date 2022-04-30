@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
 from django.db.models import Count, Sum, Manager
 import datetime
@@ -313,19 +313,32 @@ class OrderPartDetail(models.Model):
         verbose_name="Totale",
         null=True, default=None, editable=False)
     
+    @transaction.atomic
     def save(self, lazy=False):
+        orig = OrderPartDetail.objects.filter(pk=self.pk).first()
         if self.product:
             if self.quantity == 0:
-                if self.id != None:
-                    super(OrderPartDetail, self).delete()
+                if orig:
+                    self.delete()
             else:
                 self.name = self.product.name
                 self.amount = self.quantity*self.product.price
                 super(OrderPartDetail, self).save()
                 if not lazy:
-                    if self.product.availability is not null:
-                        self.product.availability -= self.quantity
+                    if self.product.availability is not None:
+                        if orig:
+                            orig_quantity = orig.quantity
+                        else:
+                            orig_quantity = 0
+                        self.product.availability -= self.quantity-orig_quantity
+                        self.product.save()
                     self.orderpart.save()
+
+    def delete(self):
+        if self.product.availability != None:
+            self.product.availability += self.quantity
+            self.product.save()
+        super(OrderPartDetail, self).delete()
     
     class Meta:
         verbose_name = "dettaglio ordine"

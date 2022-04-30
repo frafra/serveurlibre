@@ -5,6 +5,7 @@ from django.http import HttpResponse
 #from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Sum
+from django.db.utils import IntegrityError
 import datetime
 from .settings import *
 
@@ -89,23 +90,43 @@ def save(request, payment_method, checkout_id, contributor_id=0):
                             tmp[0] = {}
                         tmp[0][int(product)] = int(quantity)
                 # Salvataggio dei dettagli prodotto, porzioni di prodotto e associazione all'ordine
+                orderParts = []
+                orderPartDetails = []
                 for offer, values in tmp.items():
                     if offer == 0:
                         part = OrderPart(order=order)
                     else:
                         part = OrderPart(order=order, offer=Offer.objects.get(pk=offer))
                     part.save(lazy=True)
-                    for product, quantity in values.items():
+                    orderParts.append(part)
+                    for product_pk, quantity in values.items():
+                        product = Product.objects.get(pk=product_pk)
                         orderPartDetail = OrderPartDetail(
-                            product=Product.objects.get(pk=product),
+                            product=product,
                             quantity=quantity, orderpart=part)
-                        orderPartDetail.save(lazy=True)
+                        try:
+                            orderPartDetail.save()
+                        except IntegrityError as e:
+                            message = (
+                                "Disponibilità non sufficiente per il prodotto "
+                                f"\"{product}\": quantità richiesta {quantity}, "
+                                f"disponibile {quantity+product.availability}."
+                            )
+                            for orderPartDetail in orderPartDetails:
+                                orderPartDetail.delete()
+                            for orderPart in orderParts:
+                                orderPart.delete()
+                            order.delete()
+                            raise IntegrityError(message)
+                        orderPartDetails.append(orderPartDetail)
                     part.save(lazy=True)
                 order.save()
                 return HttpResponse(order.id)
-        return HttpResponse('ERROR')
-    except:
-        return HttpResponse('ERROR')
+        return HttpResponse('Errore: richiesta non POST', status=400)
+    except Exception as e:
+        #import traceback
+        #print(traceback.format_exc())
+        return HttpResponse(f'Errore: {e}', status=400)
 
 def change_payment_method(request, order_id, payment_method):
     order = Order.objects.get(pk=order_id)
