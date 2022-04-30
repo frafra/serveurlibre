@@ -53,9 +53,9 @@ class OrderPartDetailForm(forms.ModelForm):
     def clean_quantity(self):
         cleaned_data = super(OrderPartDetailForm, self).clean()
         product = cleaned_data.get('product')
-        if product.availability == False:
-            raise forms.ValidationError("Prodotto non disponibile")
         quantity = cleaned_data.get('quantity')
+        if product.availability < quantity:
+            raise forms.ValidationError("Prodotto non disponibile")
         if quantity == 0:
             raise forms.ValidationError("Inserire una quantità valida")
         return quantity

@@ -62,8 +62,8 @@ class Product(models.Model):
     productgroup = models.ForeignKey(ProductGroup,
         verbose_name=ProductGroup._meta.verbose_name,
         on_delete=models.PROTECT)
-    availability = models.BooleanField(
-        verbose_name="Disponibilità", default=True,
+    availability = models.PositiveIntegerField(
+        verbose_name="Disponibilità", blank=True, null=True,
         help_text="Non sarà possibile vendere prodotti se non disponibile")
     position = models.IntegerField(
         verbose_name="Posizione", blank=True, null=True,
@@ -323,6 +323,8 @@ class OrderPartDetail(models.Model):
                 self.amount = self.quantity*self.product.price
                 super(OrderPartDetail, self).save()
                 if not lazy:
+                    if self.product.availability is not null:
+                        self.product.availability -= self.quantity
                     self.orderpart.save()
     
     class Meta:

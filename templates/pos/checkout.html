@@ -100,9 +100,9 @@ Partecipante:
     {% for product in products %}
         {% if product.productgroup == category %}
         {% if product.color %}
-            <button style="color: {{ product.color }};" class="product-{{ product.id }}" {% if not product.availability %}disabled="disabled"{% endif %}>
+            <button style="color: {{ product.color }};" class="product-{{ product.id }}" {% if product.availability == 0 %}disabled="disabled"{% endif %}>
         {% else %}
-            <button class="product-{{ product.id }}" {% if not product.availability %}disabled="disabled"{% endif %}>
+            <button class="product-{{ product.id }}" {% if product.availability == 0 %}disabled="disabled"{% endif %}>
         {% endif %}
             <span class="name">{{ product.name }}</span><br />
             <span class="price">{{ product.price|floatformat:2 }}</span> €
