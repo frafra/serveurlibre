@@ -509,6 +509,20 @@ WantedBy=multi-user.target
 EOF
 
 systemctl enable serveurlibre.service
+
+# set NAME=Fedora (liveinst regression)
+cat > /usr/lib/os-release << EOF
+NAME=Fedora
+VERSION="34 (ServeurLibre)"
+ID=generic
+ID_LIKE=fedora
+VERSION_ID=34
+PRETTY_NAME="ServeurLibre 34"
+ANSI_COLOR="0;34"
+LOGO=generic-logo-icon
+CPE_NAME="cpe:/o:generic:generic:34"
+HOME_URL="https://github.com/frafra/serveurlibre"
+EOF
 %end
 
 %post --nochroot
