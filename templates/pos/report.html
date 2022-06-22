@@ -8,16 +8,16 @@
 
 <div style="width: 50%; float: left">
 <h2>Ammontare incassato complessivo</h2>
-<h3>Totale: {{ every | intcomma }} €</h3>
-Contanti: {{ every_cash | intcomma }} €<br />
-POS: {{ every_pos | intcomma }} €
+<h3>Totale: {{ every | floatformat:2 | intcomma }} €</h3>
+Contanti: {{ every_cash | floatformat:2 | intcomma }} €<br />
+POS: {{ every_pos | floatformat:2 | intcomma }} €
 </div>
 
 <div style="width: 50%; float: right">
 <h2>Ammontare incassato nell'attuale giornata lavorativa</h2>
-<h3>Totale: {{ today | intcomma }} €</h3>
-Contanti: {{ cash | intcomma }} €<br />
-POS: {{ pos | intcomma }} €
+<h3>Totale: {{ today | floatformat:2 | intcomma }} €</h3>
+Contanti: {{ cash | floatformat:2 | intcomma }} €<br />
+POS: {{ pos | floatformat:2 | intcomma }} €
 </div>
 
 </div>
