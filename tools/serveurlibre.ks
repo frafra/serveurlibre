@@ -18,6 +18,7 @@ langpacks-it
 
 # serveurlibre customization
 # branding
+-fedora-release-xfce
 -fedora-release
 -fedora-logos
 generic-release
@@ -29,6 +30,9 @@ python3-django
 # unneeded groups
 -@xfce-media
 -@xfce-office
+
+# broken/missing
+-@x86-baremetal-tools
 %end
 
 %post
@@ -152,14 +156,14 @@ systemctl enable serveurlibre.service
 # set NAME=Fedora (liveinst regression)
 cat > /usr/lib/os-release << EOF
 NAME=Fedora
-VERSION="34 (ServeurLibre)"
+VERSION="38 (ServeurLibre)"
 ID=generic
 ID_LIKE=fedora
-VERSION_ID=34
-PRETTY_NAME="ServeurLibre 34"
+VERSION_ID=38
+PRETTY_NAME="ServeurLibre 38"
 ANSI_COLOR="0;34"
 LOGO=generic-logo-icon
-CPE_NAME="cpe:/o:generic:generic:34"
+CPE_NAME="cpe:/o:generic:generic:38"
 HOME_URL="https://github.com/frafra/serveurlibre"
 EOF
 %end
