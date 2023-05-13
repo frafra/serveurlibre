@@ -29,7 +29,6 @@ function clean() {
     $('#change').text('0,00');
     $('#price').val('');
     $('#numbersleft > button#symbol-comma').text(',');
-    $('#payment_method').val('C');
     $('#topseller > button').css('display', 'inline');
     $('#items * button').removeAttr('disabled'); // NEEDED?
     $('[id^=category-]').css('display', 'none');
@@ -37,11 +36,10 @@ function clean() {
     $('#buttons > button[id^=button-]').css('display', 'inline');
     $('#numbersright').css('visibility', 'visible');
     $('#waiting').css('display', 'none');
-    $('#waiting > button').css('background-color', '');
-    $('#waiting > button').first().css('background-color', 'lightblue');
     $('#offer select').val('0');
     $('#offer select').trigger('change');
     $('#send').removeAttr('disabled');
+    $('#reset').removeAttr('disabled');
 }
 
 function new_ticket() { // modifica del 6 luglio 2013
@@ -232,10 +230,21 @@ function print() {
 }
 
 // Salvataggio
-function save() {
+function pre_save() {
     $('#send').prop('disabled', 'disabled');
+    $('#reset').prop('disabled', 'disabled');
+    $('#topseller > button').css('display', 'none');
+    $('#items * button').prop('disabled', 'disabled');
+    $('#buttons > button[id^=button-]').css('display', 'none');
+    $('#numbersright').css('visibility', 'hidden');
+    $('[id^=category-]').css('display', 'none');
+    $('#waiting').css('display', 'inline');
+}
+
+function save(payment_method) {
     if (done==1) {
-        print();
+        url='../../change/'+last_order+'/payment_method/'+payment_method+'/';
+        $.get(url);
     } else {
         info={}
         if ($('#items > ul > li').length) {
@@ -257,7 +266,6 @@ function save() {
             });
             if ($('#contributors').length) contributor=$('#contributors').val();
             else contributor=0;
-            payment_method='C';
             if (contributor==0) {
                 url='./'+payment_method+'/save/';
             } else {
@@ -271,13 +279,8 @@ function save() {
                 }
                 done=1;
                 last_order=response;
-                $('#topseller > button').css('display', 'none');
-                $('#items * button').prop('disabled', 'disabled');
-                $('#buttons > button[id^=button-]').css('display', 'none');
-                $('#numbersright').css('visibility', 'hidden');
-                $('[id^=category-]').css('display', 'none');
-                $('#waiting').css('display', 'inline');
                 print();
+                new_ticket();
             })
             .fail(function(response) {
                 alert(response.responseText);
@@ -422,16 +425,11 @@ $(document).ready(function() {
     });
 
     $('#waiting > button').click(function(event) {
-        url='../../change/'+last_order+'/payment_method/'+event.target.value+'/';
-        event.target.style.backgroundColor='yellow';
-        $.get(url, function(response) {
-            $('#waiting > button').css('background-color', '');
-            event.target.style.backgroundColor='lightblue';
-        });
+        save(event.target.value);
     });
 
     /* Setup send button */
-    $('#send').click(function() {save();});
+    $('#send').click(function() {pre_save();});
 
     /* Setup reset button */
     $('#reset').click(function() {new_ticket();});

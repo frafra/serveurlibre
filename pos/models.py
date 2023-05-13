@@ -191,7 +191,7 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=1, choices=(
         ("C", "Contanti"),
         ("P", "POS"),
-    ), verbose_name="Metodo di pagamento", default="C")
+    ), verbose_name="Metodo di pagamento")
     note = models.TextField(blank=True, verbose_name="Note")
     objects = OrderManager()
  
