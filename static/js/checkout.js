@@ -41,6 +41,7 @@ function clean() {
     $('#waiting > button').first().css('background-color', 'lightblue');
     $('#offer select').val('0');
     $('#offer select').trigger('change');
+    $('#send').removeAttr('disabled');
 }
 
 function new_ticket() { // modifica del 6 luglio 2013
@@ -283,7 +284,6 @@ function save() {
             });
         }
     }
-    $('#send').removeAttr('disabled');
 }
 function compare(arr1, arr2) {
     return $(arr1).not(arr2).length == 0 && $(arr2).not(arr1).length == 0
