@@ -9,7 +9,7 @@ from django.db.utils import IntegrityError
 import datetime
 from .settings import *
 
-# Cocidi speciali per la stampa su stampanti termiche di tipo Meteor Sprint B
+# Codici speciali per la stampa su stampanti termiche di tipo Meteor Sprint B
 sprint_b = {
     'line_length':48,
     'top':'\n',
@@ -20,6 +20,19 @@ sprint_b = {
     'double_height_on':'\x1b\x49\x1b\x21\x10',
     'reset':'\x1b\x40',
 }
+# Codici speciali per la stampa su stampanti termiche di tipo MUNBYN ITPP0047
+munbyn_itpp0047 = {
+    'line_length':48,
+    'top':'\n',
+    'bottom':'\n\n\n\n',
+    'full_cut':'\x1dV0',
+    'partial_cut':'\x1dV1',
+    'double_height_on':'\x1b!\x08',
+    'reset':'\x0c\x1b!\x00',
+}
+
+# Scelta stampante
+printer_codes = munbyn_itpp0047
 
 def home(request):
     return render(request, 'pos/home.html', {'title':"Pagina iniziale"})
@@ -191,18 +204,18 @@ def print_order(request, order_id):
     order = Order.objects.get(pk=order_id)
     response = HttpResponse(content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename=pos-%d.txt' % order.id
-    response.write(sprint_b['top'])
+    response.write(printer_codes['top'])
     date = datetime.datetime.strftime(datetime.datetime.now(), '%d-%m-%Y %H:%M:%S')
     orderparts = OrderPart.objects.filter(order=order_id)
     checkout = Checkout.objects.get(pk=order.checkout_id)
     details = {}
     # Creazione dello scontrino
-    response.write(sprint_b['reset'])
+    response.write(printer_codes['reset'])
     for line in TESTATA.strip().splitlines():
-        if len(line) > sprint_b['line_length']:
+        if len(line) > printer_codes['line_length']:
             response_write(line)
         else:
-            response.write(line.center(sprint_b['line_length']))
+            response.write(line.center(printer_codes['line_length']))
         response.write("\n")
     response.write("\n\n")
     response.write("%s %d %s\n\n" % (date, order.id, checkout))
@@ -215,7 +228,7 @@ def print_order(request, order_id):
                 details[orderpartdetail.product.productgroup].append("%dx %s (%s)\n" % (orderpartdetail.quantity, orderpartdetail.product, orderpart.offer))
             last=("%dx %s" % (orderpartdetail.quantity, orderpart.offer))
             response.write(last)
-            response.write(("%.2f euro" % (orderpart.offer.price*orderpartdetail.quantity)).rjust(sprint_b['line_length']-len(last)))
+            response.write(("%.2f euro" % (orderpart.offer.price*orderpartdetail.quantity)).rjust(printer_codes['line_length']-len(last)))
             response.write("\n")
         else: # Gestione dei prodotti non associati alle offerte
             for orderpartdetail in orderpartdetails:
@@ -224,34 +237,34 @@ def print_order(request, order_id):
                 details[orderpartdetail.product.productgroup].append("%dx %s\n" % (orderpartdetail.quantity, orderpartdetail.product))
                 last=("%dx %s" % (orderpartdetail.quantity, orderpartdetail.product))
                 response.write(last)
-                response.write(str("%.2f euro" % orderpartdetail.amount).rjust(sprint_b['line_length']-len(last)))
+                response.write(str("%.2f euro" % orderpartdetail.amount).rjust(printer_codes['line_length']-len(last)))
                 response.write("\n")
     response.write("\n")
     last=">>> Totale"
     response.write(last)
-    response.write(("%.2f euro" % order.amount).rjust(sprint_b['line_length']-len(last)))
+    response.write(("%.2f euro" % order.amount).rjust(printer_codes['line_length']-len(last)))
     response.write("\n")
     if order.contributor:
         last=">>> Totale (non scontato)"
         response.write(last)
         amount=OrderPart.objects.filter(order=order_id).aggregate(Sum('amount'))['amount__sum'] or 0
-        response.write(("%.2f euro" % amount).rjust(sprint_b['line_length']-len(last)))
+        response.write(("%.2f euro" % amount).rjust(printer_codes['line_length']-len(last)))
         response.write("\n")
     # Creazione delle comande
-    response.write(sprint_b['bottom'])
-    response.write(sprint_b['partial_cut'])
-    response.write(sprint_b['double_height_on'])
+    response.write(printer_codes['bottom'])
+    response.write(printer_codes['partial_cut'])
+    response.write(printer_codes['double_height_on'])
     for group, detail in details.items(): # Stampa della comanda divisa per categoria
-        response.write("* Comanda *".center(sprint_b['line_length']))
+        response.write("* Comanda *".center(printer_codes['line_length']))
         response.write("\n\n")
         response.write("%s %d %s\n\n" % (date, order.id, checkout))
         response.write(">>> %s\n\n" % group)
         for item in detail:
             response.write(item)
             response.write("\n\n")
-        response.write(sprint_b['bottom'])
-        response.write(sprint_b['partial_cut'])
-    response.write(sprint_b['reset'])
+        response.write(printer_codes['bottom'])
+        response.write(printer_codes['partial_cut'])
+    response.write(printer_codes['reset'])
     return response
 
 def robots(request):
